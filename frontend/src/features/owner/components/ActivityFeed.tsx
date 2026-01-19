@@ -1,5 +1,5 @@
 import { Clock } from 'lucide-react';
-import { useActivitiesControllerFindAll } from '@/api/generated/activities/activities';
+import { useActivitiesControllerFindAll } from '@/services/generated/activities/activities';
 import { formatDistanceToNow } from 'date-fns';
 
 const useActivities = () => {
@@ -11,19 +11,9 @@ export function ActivityFeed() {
 
   if (isLoading) {
     return (
-      <div className="bg-white rounded-lg shadow p-6 animate-pulse">
-        <div className="h-6 bg-slate-200 rounded w-1/3 mb-4"></div>
-        <div className="space-y-3">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="flex gap-3">
-              <div className="w-8 h-8 bg-slate-200 rounded-full"></div>
-              <div className="flex-1 space-y-2">
-                <div className="h-4 bg-slate-200 rounded w-3/4"></div>
-                <div className="h-3 bg-slate-200 rounded w-1/2"></div>
-              </div>
-            </div>
-          ))}
-        </div>
+      <div className="bg-white rounded-lg shadow p-6">
+        <div className="h-6 bg-slate-200 rounded w-1/3 mb-4 animate-pulse"></div>
+        <ListSkeleton items={3} />
       </div>
     );
   }
@@ -32,16 +22,11 @@ export function ActivityFeed() {
     return (
       <div className="bg-white rounded-lg shadow p-6">
         <h3 className="text-lg font-semibold text-slate-900 mb-4">Recent Activity</h3>
-        <div className="text-center py-8">
-          <Clock className="h-12 w-12 text-slate-300 mx-auto mb-3" />
-          <p className="text-slate-600 text-sm font-medium">No activity yet</p>
-          <p className="text-slate-500 text-xs mt-2 max-w-xs mx-auto">
-            When you request a service, updates from providers will appear here.
-          </p>
-          <p className="text-slate-400 text-xs mt-4 italic">
-            Quotes, messages, and bookings are tracked here.
-          </p>
-        </div>
+        <EmptyState
+          icon={<Clock className="h-12 w-12" />}
+          title="No activity yet"
+          description="When you request a service, updates from providers will appear here. Quotes, messages, and bookings are tracked here."
+        />
       </div>
     );
   }

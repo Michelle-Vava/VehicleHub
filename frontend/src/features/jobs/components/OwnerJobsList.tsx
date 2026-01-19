@@ -17,10 +17,7 @@ export function OwnerJobsList() {
     return (
       <PageContainer maxWidth="6xl">
         <PageHeader title="My Jobs" />
-        <div className="text-center py-12">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-          <p className="mt-2 text-gray-600">Loading jobs...</p>
-        </div>
+        <LoadingState message="Loading jobs..." />
       </PageContainer>
     );
   }

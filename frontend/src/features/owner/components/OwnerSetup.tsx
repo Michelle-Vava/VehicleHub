@@ -2,11 +2,11 @@ import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useVehicles } from '@/features/vehicles/hooks/use-vehicles';
 import { useAuth } from '@/features/auth/hooks/use-auth';
-import { StepProgress } from '@/routes/owner/-components/StepProgress';
-import { ProfileStep } from '@/routes/owner/-components/ProfileStep';
-import { VehicleStep } from '@/routes/owner/-components/VehicleStep';
-import { ReviewStep } from '@/routes/owner/-components/ReviewStep';
-import { useVehicleData } from '@/routes/owner/-components/useVehicleData';
+import { StepProgress } from '@/features/owner/components/onboarding/StepProgress';
+import { ProfileStep } from '@/features/owner/components/onboarding/ProfileStep';
+import { VehicleStep } from '@/features/owner/components/onboarding/VehicleStep';
+import { ReviewStep } from '@/features/owner/components/onboarding/ReviewStep';
+import { useVehicleData } from '@/lib/hooks';
 
 export function OwnerSetup() {
   const navigate = useNavigate();
@@ -52,22 +52,11 @@ export function OwnerSetup() {
 
   const handleComplete = async () => {
     try {
-      console.log('Updating profile with:', { ...profile, onboardingComplete: true });
       await updateProfile({
         ...profile,
         onboardingComplete: true,
       });
-      console.log('Profile updated successfully');
 
-      console.log('Creating vehicle with:', {
-        make: vehicle.make,
-        model: vehicle.model,
-        year: vehicle.year,
-        licensePlate: vehicle.licensePlate,
-        color: vehicle.color,
-        mileage: vehicle.mileage,
-        ...(vehicle.vin && vehicle.vin.length === 17 ? { vin: vehicle.vin } : {}),
-      });
       await createVehicle({
         make: vehicle.make,
         model: vehicle.model,
@@ -77,12 +66,10 @@ export function OwnerSetup() {
         mileage: vehicle.mileage,
         ...(vehicle.vin && vehicle.vin.length === 17 ? { vin: vehicle.vin } : {}),
       });
-      console.log('Vehicle created successfully');
 
-      console.log('Navigating to dashboard');
       navigate({ to: '/owner/dashboard' });
     } catch (error) {
-      console.error('Failed to complete onboarding:', error);
+      // Error handled by mutation
     }
   };
 

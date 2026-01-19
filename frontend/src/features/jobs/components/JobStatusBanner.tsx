@@ -45,7 +45,7 @@ export function JobStatusBanner({
   }
 
   return (
-    <div className="bg-green-50 border-2 border-green-200 rounded-xl p-6">
+    <AlertBox variant="success" className="border-2 rounded-xl p-6">
       <div className="flex items-start gap-4">
         <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
           <CheckCircle className="w-7 h-7 text-white" />
